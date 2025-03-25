@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    font-family: theme('fontFamily.sans');
+    line-height: 1.5;
+    font-weight: 400;
+    
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    display: flex;
+    place-items: center;
+    min-width: 320px;
+    min-height: 100vh;
+  }
+
+
+  h1 {
+    @apply text-4xl font-bold leading-tight;
+  }
+
+  button {
+    @apply rounded-lg border border-transparent px-4 py-2 text-base font-medium;
+    transition: border-color 0.25s;
+    background-color: theme('colors.music-dark');
+  }
+
+  button:hover {
+    border-color: theme('colors.music-accent');
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      color: #213547;
+      background-color: #ffffff;
+    }
+    button {
+      background-color: #f9f9f9;
+    }
+  }
+}
+
+/* Animación del gradiente */
+.animated-bg {
+  background: linear-gradient(-45deg, #1a1a1a, #3a3a3a);
+  background-size: 200% 200%;
+  animation: gradient-pulse 10s ease infinite;
+}
+
+/* Componentes personalizados */
+@layer components {
+  .song-card {
+    @apply bg-music-dark p-4 mb-2 rounded-lg hover:bg-music-gray transition-all;
+  }
+  
+  .player-controls {
+    @apply fixed bottom-0 left-0 right-0 bg-music-dark p-4;
+  }
+  
+  .playlist-selector {
+    @apply relative w-48 bg-music-dark rounded-lg hover:bg-music-gray transition-colors;
+  }
+}
