@@ -2,7 +2,8 @@ import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { SongCard } from './SongCard';
 import { Song } from '../../core/entities/Song';
 
-export const DragAndDropList = ({ songs, onReorder, onLike }: {
+export const DragAndDropList = ({ compact, songs, onReorder, onLike }: {
+  compact?: boolean;
   songs: Song[];
   onReorder: (from: number, to: number) => void;
   onLike: (id: string) => void;
@@ -19,7 +20,7 @@ export const DragAndDropList = ({ songs, onReorder, onLike }: {
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className="mb-4"
+            className={compact ? "space-y-1" : "space-y-2"}
           >
             {songs.map((song, index) => (
               <SongCard

@@ -48,4 +48,14 @@ export class Playlist {
     this.songs.removeById(songId);
     this.notifyObservers();
   }
+
+  // Nuevo método para obtener canciones como array
+  getSongsArray(): Song[] {
+    return this.songs.songs; // Acceso directo a la lista
+  }
+
+  // Método para sincronizar con el mini-player
+  notifyMiniPlayer(): void {
+    this.notifyObservers(); // Reutilizar lógica existente del Observer
+  }
 }

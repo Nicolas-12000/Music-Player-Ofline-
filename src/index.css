@@ -73,6 +73,24 @@
     @apply relative w-48 bg-music-dark rounded-lg hover:bg-music-gray transition-colors;
   }
 
+/* Animaciones */
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.animate-slideIn {
+  animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scrollbar personalizada */
+.mini-scrollbar::-webkit-scrollbar {
+  @apply w-1;
+}
+
+.mini-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-music-gray rounded-full;
+}
   /* Agrega esto al final de tu index.css */
 .music-background {
   background: linear-gradient(135deg, #0E1A2E, #16213E, #1A2747, #253055);

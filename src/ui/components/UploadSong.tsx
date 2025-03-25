@@ -1,10 +1,50 @@
-// src/ui/components/UploadSong.tsx
-import { useState } from 'react';
+import { DragDropContext, Droppable } from '@hello-pangea/dnd';
+import { SongCard } from './SongCard';
 import { Song } from '../../core/entities/Song';
-import { IndexedDBAdapter } from '../../adapters/storage/IndexDBAdapter';
 import { Playlist } from '../../core/entities/Playlist';
+import { useState } from 'react';
+import { IndexedDBAdapter } from '../../adapters/storage/IndexDBAdapter';
 
-export const UploadSong = ({ playlist }: { playlist: Playlist | null }) => {
+export const DragAndDropList = ({ compact, songs, onReorder, onLike }: {
+  compact?: boolean;
+  songs: Song[];
+  onReorder: (from: number, to: number) => void;
+  onLike: (id: string) => void;
+}) => {
+  const handleDragEnd = (result: any) => {
+    if (!result.destination) return;
+    onReorder(result.source.index, result.destination.index);
+  };
+
+  return (
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <Droppable droppableId="songs">
+        {(provided) => (
+          <div
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+            className={compact ? "space-y-1" : "space-y-2"}
+          >
+            {songs.map((song, index) => (
+              <SongCard
+                key={song.id}
+                song={song}
+                index={index}
+                onLike={onLike}
+              />
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
+  );
+};
+
+export const UploadSong = ({ playlist, miniMode }: { 
+  playlist: Playlist | null;
+  miniMode?: boolean;
+}) => {
   const [isUploading, setIsUploading] = useState(false);
   const audioStorage = new IndexedDBAdapter();
 
@@ -15,22 +55,18 @@ export const UploadSong = ({ playlist }: { playlist: Playlist | null }) => {
     const file = e.target.files[0];
     
     try {
-      // Generar ID único
       const id = crypto.randomUUID();
       
-      // Crear objeto Song con metadatos
       const newSong = new Song(
         id,
-        file.name.replace(/\.[^/.]+$/, ""), // Nombre sin extensión
+        file.name.replace(/\.[^/.]+$/, ""),
         await getAudioDuration(file),
-        0, // Likes iniciales
-        `audio-${id}` // ID de referencia al archivo
+        0,
+        `audio-${id}`
       );
 
-      // Guardar en IndexedDB
       await audioStorage.saveAudio(`audio-${id}`, file);
       
-      // Añadir a la playlist
       playlist.addSong(newSong);
       
       alert('Canción subida exitosamente!');
@@ -55,7 +91,7 @@ export const UploadSong = ({ playlist }: { playlist: Playlist | null }) => {
 
   return (
     <div className="mb-4">
-      <label className="bg-indigo-600 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-indigo-700 transition-colors">
+      <label className={miniMode ? "p-1 text-sm" : "p-2"}>
         {isUploading ? 'Subiendo...' : 'Subir Canción'}
         <input
           type="file"
