@@ -1,54 +1,77 @@
-# React + TypeScript + Vite
+# 🎵 Music Player Offline
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Un reproductor de música offline con gestión de playlists, construido con TypeScript y React.
 
-Currently, two official plugins are available:
+## 🚀 Características Principales
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Reproducción Offline**: Almacena canciones directamente en el navegador
+- **Playlists Dinámicas**:
+  - Creación/Eliminación de playlists
+  - Reordenamiento con Drag & Drop
+  - Sistema de Likes integrado
+- **Persistencia de Datos**:
+  - IndexedDB para archivos de audio
+  - LocalStorage para metadatos
+- **UI Moderna**:
+  - Animaciones fluidas con Tailwind CSS
+  - Diseño responsivo
+  - Modo claro/oscuro automático
 
-## Expanding the ESLint configuration
+## 🛠 Tecnologías Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Categoría           | Tecnologías                                                                 |
+|---------------------|-----------------------------------------------------------------------------|
+| Frontend            | React, TypeScript, Tailwind CSS, react-beautiful-dnd                        |
+| Persistencia        | IndexedDB, LocalStorage                                                     |
+| Patrones de Diseño  | Singleton, Observer, Strategy, Decorator                                    |
+| Herramientas        | Vite, ESLint, Prettier                                                      |
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 📦 Instalación
+
+1. Clona el repositorio:
+```bash
+git clone https://github.com/tu-usuario/music-player-offline.git
+```
+2. Instala dependencias:
+```bash
+npm install
+```
+3. Inicia el servidor de desarrollo:
+```bash
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+## 🗂 Estructura del Proyecto
 ```
+src/
+├── core/           # Lógica de negocio
+│   ├── entities/   # Entidades principales
+│   ├── useCases/   # Casos de uso
+│   └── strategies/ # Algoritmos de ordenamiento
+├── adapters/       # Implementaciones de almacenamiento
+├── ports/          # Interfaces de persistencia
+└── ui/             # Componentes React
+public/             # Archivos estáticos
+```
+
+## 🧩 Patrones de Diseño Implementados
+
+| Patrón    | Ubicación                | Propósito                                      |
+|-----------|----------------------|---------------------------------|
+| Singleton | PlaylistManager.ts   | Gestión centralizada de playlists |
+| Observer  | Playlist.ts          | Actualización en tiempo real de la UI |
+| Strategy  | SortStrategies.ts    | Ordenamiento dinámico de canciones |
+| Adapter   | IndexedDBAdapter.ts  | Conexión con diferentes almacenamientos |
+
+## 🤝 Contribución
+
+1. Haz fork del proyecto
+2. Crea tu rama (`git checkout -b feature/nueva-funcionalidad`)
+3. Commit tus cambios (`git commit -m 'Añadir nueva funcionalidad'`)
+4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Abre un Pull Request
+
+## 📄 Licencia
+
+MIT License © 2024 [Tu Nombre]
+
